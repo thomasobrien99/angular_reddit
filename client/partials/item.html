@@ -1,0 +1,39 @@
+<!-- CONTROLLER IS ITEM CONTROLLER -->
+<div class="item">
+  <div class="item-image">
+  	<img ng-src="{{$ctrl.item.imageUrl}}">
+  </div>
+  <div class="item-body">
+	  <h3 class="item-name">Name: {{$ctrl.item.name}}</h3>
+	  <h5><span class = "itemProperty">Price:</span> {{$ctrl.item.price/100 | currency}}</h5>
+	  <h5><span class = "itemProperty">Caffeine Scale:</span> {{$ctrl.item.caffeineScale}}</h5>
+		<h5><span class = "itemProperty">Ingredients:</span> {{$ctrl.item.ingredients}}</h5>
+		<h5><span class = "itemProperty">Rating:</span> {{$ctrl.item.rating}}</h5>
+		<h5><span class = "itemProperty">In Stock:</span> {{$ctrl.item.inStock | yesNo }}</h5>
+		<h5><span class = "itemProperty">Categories:</span> 
+			<ul>
+				<li ng-repeat = "cat in $ctrl.item.categories">{{cat}}</li>
+			</ul></h5>
+	</div>
+	<div class="item-buttons">
+	  <h3 class="item-quantity">Quantity:</h3>
+		<select ng-model = "$ctrl.newQuantity">
+			<option value='1'>1</option>
+			<option value='2'>2</option>
+			<option value='3'>3</option>
+			<option value='4'>4</option>
+			<option value='5'>5</option>
+		</select>
+		<button class = 'btn btn-warning' 
+						ng-click= "$ctrl.editItemQuantity(((+$ctrl.newQuantity||1)+$ctrl.item.quantity))">Add to Cart</button>	
+						<!-- BADLY IN NEED OF REFACTOR -->
+		<form ng-show= $ctrl.showEditItemQuantityForm 
+					name='form'
+					ng-submit="$ctrl.editItemQuantity(+$ctrl.editFormQuantity)"
+					novalidate>
+
+			<input type="text" ng-model='$ctrl.editFormQuantity'>
+			<button type="submit" ng-click='$ctrl.toggleEditItemQuantityForm()' >Change Quantity</button>
+		</form>
+	</div>
+</div>
