@@ -1,12 +1,21 @@
-body{
+/*body{
 	font-family: 'Montserrat'
 }
-/*TEMPLATE*/
-#banner {
-	background-color: darkorange;
-	margin-top: 0em;
-	color: white;
-	text-align: center;
+*//*TEMPLATE*/
+.post-heading {
+	display: flex;
+	justify-content: space-between;
+}
+.post-title {
+	font-size: 1.7em;
+}
+.post-body{
+	display:flex; 
+	justify-content: flex-start;
+}
+.post-body img{
+	height: 200;
+	width: 200;
 }
 #greeting {
 	color: darkorange;

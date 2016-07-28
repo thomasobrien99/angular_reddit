@@ -1,10 +1,22 @@
 <div class="container">
-	<div class ="col-sm-8"
-			 style="background-color:blue">
-	  <tp-post ng-repeat="post in pC.posts" post="post"></tp-post>
+	<div class = "col-sm-12">
+		<h1>Welcome to Angular Reddit</h1>
 	</div>
-	<div class="col-sm-4"
-			 style="background-color:red">
-			ASIDE
+	<div class ="col-sm-8">
+		<div ng-if="!pC.posts.length">No Posts To Show</div>
+	  <tp-post ng-repeat="post in pC.posts" post="post" class="watch"></tp-post>
+	</div>
+	<div class="col-sm-4">
+		<div ng-repeat="post in pC.posts">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+				Lorem
+				</div>
+				<div class="panel-body">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic sit facilis eius fugit commodi! Laborum molestias est maxime enim sed ipsam recusandae, voluptatum cupiditate officia sequi mollitia accusantium ullam quidem.
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nam, repellendus non. Fugit nihil, cumque veniam reiciendis odio dolorum quisquam voluptates error accusantium minus eligendi soluta architecto, sapiente facere similique?
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

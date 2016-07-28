@@ -17,11 +17,16 @@
   },
   "homepage": "https://github.com/thomasobrien99/angular-shopping-cart#readme",
   "dependencies": {
+    "angular-bootstrap": "^0.12.2",
     "body-parser": "^1.15.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
+    "express-session": "^1.14.0",
     "knex": "^0.11.5",
     "locus": "^1.2.0",
     "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.5.2",
     "pg": "^5.1.0"
   }
 }

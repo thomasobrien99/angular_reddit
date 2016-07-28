@@ -2,6 +2,24 @@ app.service('PostsService', function($http){
 	return{
 		getPosts: function(){
 			return $http.get('/posts')
+		},
+		addPost: function(post){
+			return $http.post('/posts', {post})
+		},
+		deletePost: function(id){
+			return $http.delete('/posts/'+id)
+		},
+		vote: function(id, post){
+			return $http.put('/posts/'+id, {post})
+		},
+		addComment: function(postID, comment){
+			return $http.post('/posts/'+postID+'/comments', {comment})
+		},
+		getComments: function(postID){
+			return $http.get('/posts/'+postID+'/comments');
+		},
+		deleteComment: function(postID, commentID){
+			return $http.delete('/posts/'+postID+'/comments/'+commentID)
 		}
 	}
 })

@@ -1,0 +1,27 @@
+	<header>
+		<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+
+      <button id="btn-menu-toggle" type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Angular Reddit</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+
+      <ul class="nav navbar-nav">
+        <li ng-class="{'active':$state.includes('home')}" ng-click="collapseMenu()"><a ng-href="/posts">Posts</a></li>
+        <li ui-sref-active="active" ng-click="collapseMenu()"><a ng-href="/posts/new">Add Post</a></li>
+        <li ui-sref-active="active" ng-click="collapseMenu()"><a ng-href="/profile">Profile</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	    	<li><a ng-click="nC.login()">Login</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  	</nav>
+	</header>

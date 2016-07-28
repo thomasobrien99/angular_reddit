@@ -1,11 +1,52 @@
-<form role="form" action="/posts" method="POST">
-	<div class="form-group">
-		<label for="post-title">Post Title</label>
-		<input type="text" class="form-control" name="post[title]" required>
+<div class="container">
+	<div class = "col-sm-12">
+		<h1>Welcome to Angular Reddit</h1>
+		<h2>Add your post!</h2>
 	</div>
-	<div class="form-group">
-		<label for="post-body">Post Body</label>
-		<input type="text" class="form-control" name="post[body]" required>
+	<div class ="col-sm-8">
+		<form role="form" name='newPost' ng-submit='npC.addPost(post)'>
+			<div class="form-group">
+				<label for="post-title">Post Title</label>
+				<input type="text" 
+							 class="form-control" 
+							 ng-model="post.title" 
+							 name='title' 
+							 id="post-title"
+							 required>
+			</div>
+			<div class="form-group">
+				<label for="post-body">Post Body</label>
+				<textarea 
+							 class="form-control" 
+							 ng-model="post.body" 
+							 name='body' 
+							 id="post-body"
+							 required>
+				</textarea>
+			</div>
+			<div class = "form-group">
+				<label for="post-img_url">Post Image URL: </label>
+				<input type="text"
+					class="form-control"
+					ng-model="post.img_url"
+					name="img_url"
+					id="post-img_url">
+					<label>(Your post will be assigned a default image if left blank)</label>
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
 	</div>
-	<button type="submit" class="btn btn-default">Submit</button>
-</form>
+	<div class="col-sm-4">
+		<div ng-repeat="i in [1,2,3]">
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+				Lorem
+				</div>
+				<div class="panel-body">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic sit facilis eius fugit commodi! Laborum molestias est maxime enim sed ipsam recusandae, voluptatum cupiditate officia sequi mollitia accusantium ullam quidem.
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure nam, repellendus non. Fugit nihil, cumque veniam reiciendis odio dolorum quisquam voluptates error accusantium minus eligendi soluta architecto, sapiente facere similique?
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

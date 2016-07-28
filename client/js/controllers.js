@@ -1,83 +1,93 @@
 app.controller('PostsController', PostsController);
 
-PostsController.$inject=["PostsService"];
+PostsController.$inject=["PostsService", "store", "auth"];
 
-function PostsController(PostsService){
+function PostsController(PostsService, store, auth){
   var pC = this;
+  
+
   PostsService.getPosts().then(res=>{
     pC.posts = res.data;
   }).catch(err=>console.log(err))
+
 }
-// app.controller('ListController', ListController)
-// ListController.$inject =["InventoryService"];
 
-// function ListController(InventoryService){
-//   var vm = this;
+app.controller('PostController', PostController);
 
-//   InventoryService.getInventory().then(function(res){
-//     vm.items = res.data;
-//     vm.cartTotal = vm.items.reduce((p,c)=>{
-//       return p+c.quantity*c.price;},0)
-//   })
+PostController.$inject=["PostsService", "$location"];
 
-//   vm.inCartFilter = function(item)
-//   {
-//     return item.quantity > 0;
-//   }
+function PostController(PostsService, $location){
+	var pC = this;
+	pC.commentsCollapsed = true;
+	pC.commentsFormCollapsed = true;
+	
+	PostsService.getComments(pC.post.id).then(res=>{
+		pC.comments = res.data;
+	}).catch(err=>console.log(err));
 
-//   vm.filterByCurrent = function(el){
-//   	if(!InventoryService.searchTerm) return true;
-//   	if(InventoryService.searchType === 'category') return el.categories.includes(InventoryService.searchTerm)
-//   	if(InventoryService.searchType === 'name') 
-//   	{
-//   		var re = new RegExp(InventoryService.searchTerm, 'i');
-// 		  return el.name.match(re);
-// 		}
-// 	}
-// }
+	pC.vote = function(id, num){
+		pC.post.votes += num
+		PostsService.vote(id, pC.post)
+		.then((res)=>{
+			pC.post = res.data[0];
+		})
+		.catch(err=>console.log(err))
+	}
+	pC.deletePost = function(id){
+		PostsService.deletePost(id)
+		.then(()=>{
+			$location.path('/redirect')
+		})
+		.catch(err=>console.log(err))
+	}
+	pC.comment = function(form,comment,postID){
+		comment.postID = postID
 
-// app.controller('ItemController', ItemController)
+		PostsService.addComment(postID, comment)
+		.then((res)=>{
+			pC.comments.push(res.data[0]);
+		}).catch(err=>console.log(err));
+	}
+	pC.deleteComment = function(postID, commentID){
+		PostsService.deleteComment(postID, commentID)
+		.then((res)=>{
+			pC.comments = res.data;
+		}).catch(err=>console.log(err))
+	}
+}
 
-// ItemController.$inject = ["InventoryService", "$route"];
+app.controller('NewPostController', NewPostController)
 
-// function ItemController(InventoryService, $route){
-//   var vm = this;
+NewPostController.$inject = ['PostsService','store', '$location']
 
-//   vm.subtotal = function(){
-//     return vm.item.quantity*vm.item.price;
-//   }
+function NewPostController(PostsService, store, $location)
+{
+	var npC = this;
+	npC.user = store.get('profile');
+	npC.addPost = function(post){
+		post.user_img_url = npC.user.picture
+		post.user_id = npC.user.user_id
+		post.user_name = npC.user.name
+		PostsService.addPost(post).then(()=>{
+			$location.path('/posts')
+		}).catch((err)=>{console.log(err)})
+	}
+}
 
-//   vm.editItemQuantity = function(newQuant){
-//     InventoryService.editItemQuantity(vm.item.name, newQuant).then(function(res){
-//       vm.item.quantity = res.data[0];
-//       $route.reload();
-//     });
-//   } 
-  
-//   vm.toggleEditItemQuantityForm = function(){
-//     vm.showEditItemQuantityForm = !vm.showEditItemQuantityForm;
-//   }
-// }
+app.controller('NavController', NavController)
 
-// app.controller('SearchController', SearchController)
+NavController.$inject['auth']
+function NavController(auth){
+	var nC = this;
 
-// SearchController.$inject = ["InventoryService"];
-
-
-// function SearchController(InventoryService){
-//   var vm = this;
-
-//   this.changeSearch = function(type){
-//   	if(type === "category") InventoryService.changeSearchTerm(this.searchCategory, type); //THIS COULD BE WAY CLEANER
-//   	if(type === "name") InventoryService.changeSearchTerm(this.searchName, type);
-//   }
-
-//   vm.size = 0;
-
-//   InventoryService.getInventory().then(function(res){
-//     vm.size = res.data.reduce((p,c)=>{
-//       return p += c.quantity;
-//     },0) 
-//   })
-
-// }
+	nC.login = function(){
+			// Set popup to true to use popup
+			// Store 'profile' & 'token' in local storage
+	    auth.signin({popup: true}, function(profile, token){
+      	nC.username = profile['name'];
+      	nC.picture = profile['picture'];
+	      }, function(err){
+	        // If anything goes wrong
+      	});
+  }
+}
