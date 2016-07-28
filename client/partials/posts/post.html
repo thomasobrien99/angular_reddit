@@ -2,7 +2,7 @@
 	<div class="panel-heading post-heading">
 		<div class="post-title">{{pC.post.title}}</div>
 		<div class="post-sign">
-				<img src="{{pC.post.user_img_url}}" />
+				<img src="{{pC.post.user_img_url}}" style="height:50px; width:50px;" />
 				Author: {{pC.post.user_name}}
 		</div>
 	</div>
@@ -18,9 +18,7 @@
 			Comments ({{pC.comments.length}})
 	</button>
 		<div class="pull-right">
-<!-- 	<button class="btn btn-danger" ng-click='pC.deletePost(pC.post.id)'>
-		Delete
-	</button> -->
+
 	<button class='btn btn-success'
 					ng-click="pC.vote(pC.post.id, 1)">
 					<i class="fa fa-arrow-up" aria-hidden="true"></i>
@@ -29,10 +27,6 @@
 					ng-click="pC.vote(pC.post.id, -1)">
 					<i class="fa fa-arrow-down" aria-hidden="true"></i>
 	</button>
-<!-- 	<button class='btn btn-primary disabled'>
-					Votes: {{pC.post.votes}}
-	</button> -->
-
 	Votes <span class="badge">{{pC.post.votes}}</span>
 	</div>
 	<div uib-collapse="pC.commentsCollapsed">
@@ -48,15 +42,6 @@
 	</div>
 	<div uib-collapse="pC.commentsFormCollapsed">
 		<form role="form" name="commentForm" ng-submit="pC.comment(commentForm, comment, pC.post.id)">
-<!-- 			<div class="form-group">
-				<label for="post-title">Comment Title</label>
-				<input 
-					type="text" 
-					class="form-control" 
-					ng-model = "comment.title"
-					name="title" 
-					required>
-			</div> -->
 			<div class="form-group">
 				<label for="post-body">Add Comment Body</label>
 				<input 

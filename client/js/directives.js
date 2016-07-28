@@ -12,3 +12,9 @@ app.component('tpNav', {
 	controllerAs: 'nC',
 	templateUrl: '../partials/nav.html'
 })
+
+app.component('tpSearch', {
+	controller: 'SearchController',
+	controllerAs: 'sC',
+	templateUrl: '../partials/searchfilters.html'
+})

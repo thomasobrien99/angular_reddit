@@ -2,6 +2,7 @@
 	<div class = "col-sm-12">
 		<h1>Welcome to Angular Reddit</h1>
 	</div>
+	<tp-search></tp-search>
 	<div class ="col-sm-8">
 		<div ng-if="!pC.posts.length">No Posts To Show</div>
 	  <tp-post ng-repeat="post in pC.posts" post="post" class="watch"></tp-post>
