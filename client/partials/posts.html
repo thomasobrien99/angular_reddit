@@ -1,11 +1,16 @@
 <div class="container">
+
 	<div class = "col-sm-12">
 		<h1>Welcome to Angular Reddit</h1>
 	</div>
-	<tp-search></tp-search>
 	<div class ="col-sm-8">
+		<tp-search></tp-search>
 		<div ng-if="!pC.posts.length">No Posts To Show</div>
-	  <tp-post ng-repeat="post in pC.posts" post="post" class="watch"></tp-post>
+	  <tp-post 
+	  	ng-repeat="post in pC.posts | orderBy: '-votes'" 
+	  	post="post" 
+	  	on-update="pC.updatePost(post, prop, value)">
+	  </tp-post>
 	</div>
 	<div class="col-sm-4">
 		<div ng-repeat="post in pC.posts">
@@ -20,4 +25,5 @@
 			</div>
 		</div>
 	</div>
+
 </div>

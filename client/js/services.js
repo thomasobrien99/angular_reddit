@@ -9,7 +9,7 @@ app.service('PostsService', function($http){
 		deletePost: function(id){
 			return $http.delete('/posts/'+id)
 		},
-		vote: function(id, post){
+		updatePost: function(id, post){
 			return $http.put('/posts/'+id, {post})
 		},
 		addComment: function(postID, comment){

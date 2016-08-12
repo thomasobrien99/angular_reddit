@@ -1,6 +1,7 @@
 app.component('tpPost',{
 	bindings: {
-		post: '<'
+		post: '<',
+		onUpdate: '&'
 	},
 	controller: 'PostController',
 	controllerAs: 'pC',

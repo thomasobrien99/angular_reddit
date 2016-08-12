@@ -2,62 +2,85 @@
 	<div class="panel-heading post-heading">
 		<div class="post-title">{{pC.post.title}}</div>
 		<div class="post-sign">
-				<img src="{{pC.post.user_img_url}}" style="height:50px; width:50px;" />
-				Author: {{pC.post.user_name}}
+			<table>
+				<tbody>
+					<tr>
+						<td rowspan="2">
+							<img src="{{pC.post.user_img_url}}" style="height:50px; width:50px; margin-right:5px" />
+						</td>
+						<td>
+							Author: {{pC.post.user_name}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Date: {{pC.post.created_at | date}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	</div>
 	<div class="panel-body post-body">
-		<img src="{{pC.post.img_url}}" alt="Poster Supplied Bad URL">
-		<div>{{pC.post.body}}</div>  
+		<p>
+			<img src="{{pC.post.img_url}}" alt="Poster Supplied Bad URL" class="post-image">
+			{{pC.post.body}} 
+		</p>
 	</div>
 	
 	<div class="panel-footer">
-	<button class='btn btn-info'
-					ng-click="pC.commentsCollapsed = !pC.commentsCollapsed">
-			Comments ({{pC.comments.length}})
-	</button>
+		
+		<button class='btn btn-info'
+						ng-click="pC.commentsCollapsed = !pC.commentsCollapsed">
+				Comments ({{pC.comments.length}})
+		</button>
+		
 		<div class="pull-right">
-
-	<button class='btn btn-success'
-					ng-click="pC.vote(pC.post.id, 1)">
-					<i class="fa fa-arrow-up" aria-hidden="true"></i>
-	</button>
-	<button class='btn btn-danger'
-					ng-click="pC.vote(pC.post.id, -1)">
-					<i class="fa fa-arrow-down" aria-hidden="true"></i>
-	</button>
-	Votes <span class="badge">{{pC.post.votes}}</span>
-	</div>
-	<div uib-collapse="pC.commentsCollapsed">
-		<br>
-		<div class="well" ng-repeat="comment in pC.comments">
-			<li>{{comment.body}}</li>
-			<li><em>{{comment.user_name}}</em></li>
-			<li><em>{{comment.created_at}}</em></li>
-		</div>
-		<button 
-			class="btn btn-success"
-			ng-click="pC.commentsFormCollapsed = !pC.commentsFormCollapsed">Add Comment +</button>
-	</div>
-	<div uib-collapse="pC.commentsFormCollapsed">
-		<form role="form" name="commentForm" ng-submit="pC.comment(commentForm, comment, pC.post.id)">
-			<div class="form-group">
-				<label for="post-body">Add Comment Body</label>
-				<input 
-					type="text" 
-					class="form-control" 
-					name="body"
-					ng-model="comment.body" 
-					required>
-			</div>
-			<button type="submit" 
-							class="btn btn-default"
-							ng-click="pC.commentsFormCollapsed = !pC.commentsFormCollapsed">
-							Submit
+			<button class='btn btn-success'
+							ng-click="pC.vote(1)">
+							<i class="fa fa-arrow-up" aria-hidden="true"></i>
 			</button>
-		</form>
-	</div>
+			<button class='btn btn-danger'
+							ng-click="pC.vote(-1)">
+							<i class="fa fa-arrow-down" aria-hidden="true"></i>
+			</button>
+			Votes <span class="badge">{{pC.post.votes}}</span>
+		</div>
+
+			<div uib-collapse="pC.commentsCollapsed">
+				<br>
+				<div class="well" ng-repeat="comment in pC.comments">
+					<li>{{comment.body}}</li>
+					<li><em>{{comment.user_name}}</em></li>
+					<li><em>{{comment.created_at}}</em></li>
+				</div>
+				<button 
+					class="btn btn-success"
+					ng-click="pC.commentsFormCollapsed = !pC.commentsFormCollapsed">
+					Add Comment +
+				</button>
+			</div>
+			
+			<div uib-collapse="pC.commentsFormCollapsed">
+				<form role="form" name="commentForm" ng-submit="pC.comment(commentForm, comment, pC.post.id)">
+					<div class="form-group">
+						<label for="post-body">Add Comment Body</label>
+						<input 
+							type="text" 
+							class="form-control" 
+							name="body"
+							ng-model="comment.body" 
+							required>
+					</div>
+					<button 
+						type="submit" 
+						class="btn btn-default"
+						ng-click="pC.commentsFormCollapsed = !pC.commentsFormCollapsed">
+						Submit
+					</button>
+				</form>
+			</div>
 	</div>
 </div>
 <br><br>

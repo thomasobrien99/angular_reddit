@@ -1,38 +1,43 @@
 app.controller('PostsController', PostsController);
 
-PostsController.$inject=["PostsService", "store", "auth"];
+PostsController.$inject=["$scope", "PostsService", "store", "auth"];
 
-function PostsController(PostsService, store, auth){
+function PostsController($scope, PostsService, store, auth){
   var pC = this;
-  
 
   PostsService.getPosts().then(res=>{
     pC.posts = res.data;
   }).catch(err=>console.log(err))
 
+  pC.updatePost = (post, prop, value)=>{
+  	post[prop] += value
+  	PostsService.updatePost(post.id, post).then(res=>{
+  		pC.posts.filter(el=>{
+  			return el.id===res.data[0].id
+  		})[0] = res.data[0]
+  		console.log(res.data)
+  	}).catch(err=>console.log(err))
+  }
 }
 
 app.controller('PostController', PostController);
 
-PostController.$inject=["PostsService", "$location"];
+PostController.$inject=["$scope","PostsService", "$location"];
 
-function PostController(PostsService, $location){
+function PostController($scope, PostsService, $location){
 	var pC = this;
+
 	pC.commentsCollapsed = true;
 	pC.commentsFormCollapsed = true;
-	
+
 	PostsService.getComments(pC.post.id).then(res=>{
 		pC.comments = res.data;
 	}).catch(err=>console.log(err));
 
-	pC.vote = function(id, num){
-		pC.post.votes += num
-		PostsService.vote(id, pC.post)
-		.then((res)=>{
-			pC.post = res.data[0];
-		})
-		.catch(err=>console.log(err))
+	pC.vote = function(value){
+		pC.onUpdate({post: pC.post, prop:'votes', value})
 	}
+
 	pC.deletePost = function(id){
 		PostsService.deletePost(id)
 		.then(()=>{
@@ -40,6 +45,7 @@ function PostController(PostsService, $location){
 		})
 		.catch(err=>console.log(err))
 	}
+
 	pC.comment = function(form,comment,postID){
 		comment.postID = postID
 
@@ -48,6 +54,7 @@ function PostController(PostsService, $location){
 			pC.comments.push(res.data[0]);
 		}).catch(err=>console.log(err));
 	}
+
 	pC.deleteComment = function(postID, commentID){
 		PostsService.deleteComment(postID, commentID)
 		.then((res)=>{
